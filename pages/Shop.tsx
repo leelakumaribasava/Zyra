@@ -2,105 +2,110 @@
 import React, { useState, useMemo } from 'react';
 import { Page, Product } from '../types';
 import { PRODUCTS } from '../constants';
-import { Filter, ChevronDown, SlidersHorizontal, Search } from 'lucide-react';
+import { Filter, ChevronDown, SlidersHorizontal, Search, ShoppingBag } from 'lucide-react';
 
 interface ShopProps {
   onNavigate: (page: Page, product?: Product | null) => void;
 }
 
 const Shop: React.FC<ShopProps> = ({ onNavigate }) => {
+  const [activeGender, setActiveGender] = useState<string>('All');
+  const [activeCollection, setActiveCollection] = useState<string>('All');
   const [activeCategory, setActiveCategory] = useState<string>('All');
-  const [priceRange, setPriceRange] = useState<number>(300);
-  const [sortBy, setSortBy] = useState<string>('featured');
+  const [priceRange, setPriceRange] = useState<number>(500);
 
-  const categories = ['All', 'Hoodies', 'Tees', 'Sweatshirts', 'Accessories'];
+  const collections = [
+    'All', 'Minimal Embroidery', 'Luxury Streetwear', 'Zuno Signature Series', 
+    'Everyday Essentials', 'Winter 2025', 'Best for Gifting', 'Trending on Instagram'
+  ];
+
+  const categories = [
+    'All', 'Oversized Tees', 'Hoodies', 'Sweatshirts', 'Zip Hoodies', 
+    'Polo Tshirts', 'Cargos/Joggers', 'Custom Caps', 'Baby Wear', 'Tote Bags'
+  ];
 
   const filteredProducts = useMemo(() => {
     return PRODUCTS.filter(p => 
+      (activeGender === 'All' || p.gender === activeGender || p.gender === 'Unisex') &&
+      (activeCollection === 'All' || p.collection === activeCollection || p.tags?.includes(activeCollection)) &&
       (activeCategory === 'All' || p.category === activeCategory) &&
       p.price <= priceRange
     );
-  }, [activeCategory, priceRange]);
+  }, [activeGender, activeCollection, activeCategory, priceRange]);
 
   return (
     <div className="pt-32 pb-24 px-6 lg:px-12 animate-in fade-in slide-in-from-bottom-4 duration-500">
-      <div className="flex flex-col lg:flex-row gap-12">
-        {/* Sidebar Filters */}
-        <aside className="lg:w-64 space-y-12 shrink-0">
-          <div>
-            <h2 className="text-2xl font-serif mb-8">Atelier Filters</h2>
-            <div className="space-y-8">
-              {/* Categories */}
-              <div className="space-y-4">
-                <h4 className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#D4AF37]">Categories</h4>
-                <div className="flex flex-col space-y-3">
-                  {categories.map(cat => (
-                    <button 
-                      key={cat}
-                      onClick={() => setActiveCategory(cat)}
-                      className={`text-sm tracking-widest uppercase text-left transition-colors ${activeCategory === cat ? 'text-white' : 'text-white/40 hover:text-white'}`}
-                    >
-                      {cat}
-                    </button>
-                  ))}
-                </div>
-              </div>
+      {/* Hero Header */}
+      <div className="mb-20 space-y-4">
+        <h1 className="text-6xl font-serif">The Atelier</h1>
+        <p className="text-white/40 text-sm tracking-widest uppercase max-w-xl">
+          Discover a curation of high-GSM masterpieces designed to be your signature canvas.
+        </p>
+      </div>
 
-              {/* Price Range */}
-              <div className="space-y-4">
-                <h4 className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#D4AF37]">Price Range</h4>
-                <div className="space-y-2">
-                  <input 
-                    type="range" 
-                    min="50" 
-                    max="500" 
-                    value={priceRange}
-                    onChange={(e) => setPriceRange(parseInt(e.target.value))}
-                    className="w-full accent-[#D4AF37]" 
-                  />
-                  <div className="flex justify-between text-[10px] tracking-widest opacity-40">
-                    <span>$50</span>
-                    <span>Up to ${priceRange}</span>
-                  </div>
-                </div>
-              </div>
+      <div className="flex flex-col lg:flex-row gap-16">
+        {/* Advanced Filters */}
+        <aside className="lg:w-72 space-y-12 shrink-0">
+          <div className="sticky top-32 space-y-12">
+            {/* Gender Switch */}
+            <div className="flex bg-white/5 p-1">
+              {['All', 'Men', 'Women', 'Kids'].map(g => (
+                <button 
+                  key={g}
+                  onClick={() => setActiveGender(g)}
+                  className={`flex-1 py-3 text-[9px] font-bold tracking-widest uppercase transition-all ${activeGender === g ? 'bg-[#D4AF37] text-black' : 'hover:bg-white/5'}`}
+                >
+                  {g}
+                </button>
+              ))}
+            </div>
 
-              {/* GSM / Fabric */}
-              <div className="space-y-4">
-                <h4 className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#D4AF37]">Fabric Quality</h4>
-                <div className="space-y-3">
-                  {['280 GSM+', '400 GSM+', '500 GSM+'].map(gsm => (
-                    <label key={gsm} className="flex items-center space-x-3 cursor-pointer group">
-                      <div className="w-4 h-4 border border-white/20 group-hover:border-[#D4AF37] transition-colors"></div>
-                      <span className="text-xs tracking-widest uppercase opacity-40 group-hover:opacity-100 transition-opacity">{gsm}</span>
-                    </label>
-                  ))}
-                </div>
+            {/* Collections */}
+            <div className="space-y-6">
+              <h4 className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#D4AF37]">Collections</h4>
+              <div className="flex flex-col space-y-4">
+                {collections.map(col => (
+                  <button 
+                    key={col}
+                    onClick={() => setActiveCollection(col)}
+                    className={`text-[10px] tracking-widest uppercase text-left transition-colors ${activeCollection === col ? 'text-white font-bold' : 'text-white/30 hover:text-white'}`}
+                  >
+                    {col}
+                  </button>
+                ))}
               </div>
+            </div>
+
+            {/* Categories */}
+            <div className="space-y-6">
+              <h4 className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#D4AF37]">Silhouettes</h4>
+              <div className="flex flex-col space-y-4">
+                {categories.map(cat => (
+                  <button 
+                    key={cat}
+                    onClick={() => setActiveCategory(cat)}
+                    className={`text-[10px] tracking-widest uppercase text-left transition-colors ${activeCategory === cat ? 'text-white font-bold' : 'text-white/30 hover:text-white'}`}
+                  >
+                    {cat}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Price */}
+            <div className="space-y-6">
+              <h4 className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#D4AF37]">Budget — Max ${priceRange}</h4>
+              <input 
+                type="range" min="40" max="500" value={priceRange} 
+                onChange={(e) => setPriceRange(parseInt(e.target.value))}
+                className="w-full accent-[#D4AF37]" 
+              />
             </div>
           </div>
         </aside>
 
-        {/* Product Grid */}
+        {/* Product Display */}
         <div className="flex-grow space-y-12">
-          {/* Controls Bar */}
-          <div className="flex flex-col sm:flex-row items-center justify-between border-b border-white/5 pb-8 space-y-4 sm:space-y-0">
-            <span className="text-xs tracking-[0.2em] uppercase text-white/40">
-              Showing {filteredProducts.length} masterpieces
-            </span>
-            <div className="flex items-center space-x-8">
-              <div className="flex items-center space-x-2 text-xs tracking-widest uppercase cursor-pointer hover:text-[#D4AF37]">
-                <span>Sort by: {sortBy}</span>
-                <ChevronDown size={14} />
-              </div>
-              <div className="flex items-center space-x-2 text-xs tracking-widest uppercase cursor-pointer lg:hidden">
-                <SlidersHorizontal size={14} />
-                <span>Filters</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-x-8 gap-y-16">
             {filteredProducts.map((product) => (
               <div 
@@ -108,62 +113,49 @@ const Shop: React.FC<ShopProps> = ({ onNavigate }) => {
                 className="group cursor-pointer"
                 onClick={() => onNavigate(Page.PDP, product)}
               >
-                <div className="relative aspect-[3/4] overflow-hidden mb-6 bg-[#1A1A1A]">
-                  <img 
-                    src={product.image} 
-                    alt={product.name}
-                    className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
-                  />
-                  <img 
-                    src={product.hoverImage} 
-                    alt={product.name}
-                    className="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-                  />
-                  {product.customizable && (
-                    <div className="absolute top-4 right-4 bg-black/80 backdrop-blur-md px-3 py-1 text-[10px] tracking-[0.2em] uppercase font-bold text-[#D4AF37] border border-[#D4AF37]/30">
-                      Bespoke
-                    </div>
-                  )}
+                <div className="relative aspect-[3/4] overflow-hidden mb-6 bg-[#1A1A1A] border border-white/5">
+                  <img src={product.image} className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" />
+                  <img src={product.hoverImage} className="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                  
+                  {/* Status Badges */}
+                  <div className="absolute top-4 left-4 flex flex-col gap-2">
+                    {product.collection && (
+                      <span className="bg-black/60 backdrop-blur-md px-3 py-1 text-[8px] tracking-widest uppercase font-bold border border-white/10">{product.collection}</span>
+                    )}
+                    {product.tags?.includes('Trending on Instagram') && (
+                      <span className="bg-[#D4AF37]/90 text-black px-3 py-1 text-[8px] tracking-widest uppercase font-black">🔥 Trending</span>
+                    )}
+                  </div>
+
                   <div className="absolute bottom-4 left-4 right-4 translate-y-full group-hover:translate-y-0 transition-transform duration-500 flex gap-2">
                     <button 
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        onNavigate(Page.Studio, product);
-                      }}
-                      className="flex-grow bg-white text-black py-4 text-[10px] font-bold tracking-[0.3em] uppercase transition-all hover:bg-[#D4AF37]"
+                      onClick={(e) => { e.stopPropagation(); onNavigate(Page.Studio, product); }}
+                      className="flex-grow bg-white text-black py-4 text-[9px] font-bold tracking-[0.3em] uppercase transition-all hover:bg-[#D4AF37]"
                     >
-                      Customize
+                      Bespoke Tool
                     </button>
-                    <button className="bg-black/80 backdrop-blur-md border border-white/10 p-4 hover:border-[#D4AF37] transition-all">
-                      <Search size={16} />
+                    <button className="bg-black/60 backdrop-blur-md border border-white/10 p-4 hover:bg-[#D4AF37] hover:text-black transition-all">
+                      <ShoppingBag size={14} />
                     </button>
                   </div>
                 </div>
                 <div className="flex justify-between items-start">
                   <div>
-                    <h3 className="text-lg font-serif mb-1 group-hover:text-[#D4AF37] transition-colors">{product.name}</h3>
-                    <div className="flex items-center space-x-3">
-                      <p className="text-[10px] text-white/30 tracking-widest uppercase">{product.gsm} GSM</p>
-                      <span className="w-1 h-1 bg-white/20 rounded-full"></span>
-                      <p className="text-[10px] text-white/30 tracking-widest uppercase">{product.fabric}</p>
-                    </div>
+                    <h3 className="text-base font-serif mb-1 group-hover:text-[#D4AF37] transition-colors">{product.name}</h3>
+                    <p className="text-[9px] text-white/30 tracking-widest uppercase">
+                      {product.gender} • {product.gsm > 0 ? `${product.gsm} GSM` : ''} {product.fabric}
+                    </p>
                   </div>
-                  <span className="text-sm font-light tracking-widest font-serif">${product.price}</span>
+                  <span className="text-sm font-light font-serif">${product.price}</span>
                 </div>
               </div>
             ))}
           </div>
 
           {filteredProducts.length === 0 && (
-            <div className="py-24 text-center space-y-6">
-              <h3 className="text-3xl font-serif">No matches found</h3>
-              <p className="text-white/40 max-w-sm mx-auto">Try adjusting your filters to find your perfect bespoke piece.</p>
-              <button 
-                onClick={() => {setActiveCategory('All'); setPriceRange(500);}}
-                className="text-[#D4AF37] text-xs font-bold tracking-[0.3em] uppercase border-b border-[#D4AF37]"
-              >
-                Reset All Filters
-              </button>
+            <div className="py-32 text-center border border-white/5 border-dashed rounded-lg">
+               <h3 className="text-2xl font-serif text-white/20">No matching pieces in the Atelier</h3>
+               <button onClick={() => {setActiveGender('All'); setActiveCollection('All'); setActiveCategory('All');}} className="mt-4 text-[#D4AF37] text-[10px] font-bold tracking-widest uppercase border-b border-[#D4AF37]">Clear All Filters</button>
             </div>
           )}
         </div>

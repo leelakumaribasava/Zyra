@@ -1,80 +1,60 @@
 
-import React from 'react';
 import { Product } from './types';
 
 export const PRODUCTS: Product[] = [
   {
-    id: 'h1',
-    name: 'The Zyra Hoodie',
-    price: 185,
+    id: 'st-1',
+    name: 'Heavyweight Box Tee',
+    price: 110,
+    category: 'Oversized Tees',
+    collection: 'Luxury Streetwear',
+    gender: 'Unisex',
+    image: 'https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?auto=format&fit=crop&w=800&q=80',
+    hoverImage: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=800&q=80',
+    colors: ['#0F0F0F', '#F5F5F5', '#4A0E0E'],
+    sizes: ['S', 'M', 'L', 'XL'],
+    description: 'The definitive luxury streetwear silhouette. Dropped shoulders, wide sleeves, and a structure that holds its shape.',
+    gsm: 320,
+    fabric: 'Compact Jersey Cotton',
+    customizable: true,
+    tags: ['Trending on Instagram', 'Luxury Streetwear']
+  },
+  {
+    id: 'st-2',
+    name: 'Signature Oversized Hoodie',
+    price: 220,
     category: 'Hoodies',
+    collection: 'Zuno Signature Series',
+    gender: 'Unisex',
     image: 'https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=800&q=80',
     hoverImage: 'https://images.unsplash.com/photo-1578587018452-892bacefd3f2?auto=format&fit=crop&w=800&q=80',
-    colors: ['#0F0F0F', '#3D2B1F', '#000080', '#2E3B2E'],
+    colors: ['#2A2A2A', '#000080'],
     sizes: ['S', 'M', 'L', 'XL', 'XXL'],
-    description: 'A heavyweight premium hoodie crafted from 450 GSM French Terry cotton. Designed for the perfect relaxed luxury silhouette.',
-    gsm: 450,
+    description: 'Double-layered hood, kangaroo pocket, and rib-knit cuffs.',
+    gsm: 480,
     fabric: 'French Terry Cotton',
-    customizable: true
-  },
-  {
-    id: 't1',
-    name: 'Bespoke Essential Tee',
-    price: 95,
-    category: 'Tees',
-    image: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=800&q=80',
-    hoverImage: 'https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?auto=format&fit=crop&w=800&q=80',
-    colors: ['#FFFFFF', '#0F0F0F', '#D4AF37'],
-    sizes: ['S', 'M', 'L', 'XL'],
-    description: 'The ultimate luxury tee. 280 GSM premium cotton with a silk-like finish.',
-    gsm: 280,
-    fabric: 'Supima Cotton',
-    customizable: true
-  },
-  {
-    id: 'h2',
-    name: 'Graphite Oversized Zip',
-    price: 210,
-    category: 'Hoodies',
-    image: 'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&w=800&q=80',
-    hoverImage: 'https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=800&q=80',
-    colors: ['#2A2A2A', '#1A1A1A'],
-    sizes: ['M', 'L', 'XL'],
-    description: 'Double-layered hood with silver-toned hardware and bespoke embroidery details.',
-    gsm: 500,
-    fabric: 'Organic Cotton Mix',
-    customizable: true
-  },
-  {
-    id: 's1',
-    name: 'Signature Sweatshirt',
-    price: 160,
-    category: 'Sweatshirts',
-    image: 'https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?auto=format&fit=crop&w=800&q=80',
-    hoverImage: 'https://images.unsplash.com/photo-1578681994506-38fbd0131f1f?auto=format&fit=crop&w=800&q=80',
-    colors: ['#3D2B1F', '#4A0E0E'],
-    sizes: ['S', 'M', 'L', 'XL'],
-    description: 'Classic fit luxury sweatshirt with brushed interior for ultimate comfort.',
-    gsm: 400,
-    fabric: 'Cotton Fleece',
-    customizable: true
+    customizable: true,
+    tags: ['Zuno Signature Series', 'Winter 2025']
   }
+];
+
+export const FABRICS = [
+  { name: 'Supima Cotton', price: 0, tag: 'Year-Round', desc: 'Silky smooth, extra-long staple fibers.' },
+  { name: 'French Terry', price: 25, tag: 'Winter', desc: 'Heavyweight loopback for structure.' },
+  { name: 'Cashmere Blend', price: 85, tag: 'Premium', desc: 'Ultimate softness with thermal regulation.' }
 ];
 
 export const THREAD_COLORS = [
   { name: 'Gold', hex: '#D4AF37' },
   { name: 'Silver', hex: '#C0C0C0' },
-  { name: 'Rose Gold', hex: '#B76E79' },
   { name: 'Midnight Black', hex: '#000000' },
-  { name: 'Pure White', hex: '#FFFFFF' },
-  { name: 'Deep Wine', hex: '#4A0E0E' },
-  { name: 'Forest Green', hex: '#1B3022' }
+  { name: 'Pure White', hex: '#FFFFFF' }
 ];
 
-export const FONTS = [
-  'Playfair Display',
-  'Plus Jakarta Sans',
-  'Cormorant Garamond',
-  'Montserrat',
-  'Bebas Neue'
-];
+export const FONTS = ['Playfair Display', 'Plus Jakarta Sans', 'Bebas Neue', 'Cormorant Garamond'];
+
+export const STYLE_DETAILS = {
+  collars: ['Classic Crew', 'Ribbed Mock', 'Deep V-Neck'],
+  sleeves: ['Standard Hem', 'Double Ribbed', 'Raw Cut'],
+  stitching: ['Tone-on-tone', 'Contrast Gold', 'Silver Lux']
+};
